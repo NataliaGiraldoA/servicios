@@ -51,6 +51,23 @@ public class RecordServiceImpl implements RecordService {
         if(recordRequestDTO.getTitle() == null ||  recordRequestDTO.getTitle().isBlank()){
             throw new Exception("RecordRequestDTO.title is null");
         }
+        if(recordRequestDTO.getArtist() == null ||  recordRequestDTO.getArtist().isBlank()){
+            throw new Exception("RecordRequestDTO.artist is null");
+        }
+        if(recordRequestDTO.getGenre() == null ||  recordRequestDTO.getGenre().isBlank()){
+            throw new Exception("RecordRequestDTO.genre is null");
+        }
+        if(recordRequestDTO.getReleaseYear() == null){
+            throw new Exception("RecordRequestDTO.releaseYear is null");
+        }
+        if(recordRequestDTO.getPrice() == null || recordRequestDTO.getPrice() <= 0){
+            throw new Exception("RecordRequestDTO.price is null or less than or equal to 0");
+        }
+        if(recordRequestDTO.getStockQuantity() == null || recordRequestDTO.getStockQuantity() < 0){
+            throw new Exception("RecordRequestDTO.stockQuantity is null or less than 0");
+        }
+
+
         //Otras validaciones
         // Validación de dependencia con Category
         // Validar si existe la categoria por ID
