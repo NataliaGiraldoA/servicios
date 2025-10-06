@@ -1,0 +1,15 @@
+package co.edu.usbcali.records;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Date;
+
+@SpringBootApplication
+public class RecordsApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RecordsApplication.class, args);
+	}
+
+}
