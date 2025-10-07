@@ -9,4 +9,6 @@ public interface CategoryService {
     List<String> getCategoriesString();
     List<CategoryResponseDTO> getCategoriesResponseDTO();
     CategoryResponseDTO saveCategory(CategoryRequestDTO categoryRequestDTO) throws Exception;
+    CategoryResponseDTO updateCategory(Integer id, CategoryRequestDTO categoryRequestDTO) throws Exception;
+    CategoryResponseDTO updateCategoryPartial(Integer id, CategoryRequestDTO categoryRequestDTO) throws Exception;
 }

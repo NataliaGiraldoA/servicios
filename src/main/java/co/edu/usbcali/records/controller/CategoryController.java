@@ -30,6 +30,13 @@ public class CategoryController {
     @PostMapping("/create")
     public ResponseEntity<CategoryResponseDTO> saveCategory(@RequestBody CategoryRequestDTO categoryRequestDTO) throws Exception {
         return new ResponseEntity<>(categoryService.saveCategory(categoryRequestDTO), HttpStatus.CREATED);
-
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CategoryResponseDTO> updateCategory(
+            @PathVariable Integer id,
+            @RequestBody CategoryRequestDTO categoryRequestDTO
+    ) throws Exception {
+        return new ResponseEntity<>(categoryService.updateCategory(id, categoryRequestDTO), HttpStatus.OK);
+    }
+
 }

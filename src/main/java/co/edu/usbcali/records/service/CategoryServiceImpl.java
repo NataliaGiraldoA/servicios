@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,4 +59,45 @@ public class CategoryServiceImpl implements CategoryService{
 
         return CategoryMapper.EntityToDto(category);
     }
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public CategoryResponseDTO updateCategory(Integer id, CategoryRequestDTO categoryRequestDTO) throws Exception {
+        if (id == null) {
+            throw new Exception("Category id is required");
+        }
+
+        if (categoryRequestDTO == null) {
+            throw new Exception("Category data is required");
+        }
+        // Buscar la categoría existente
+        Category existingCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new Exception("Category not found with id: " + id));
+        // Actualizar los campos
+        existingCategory.setName(categoryRequestDTO.getName());
+        existingCategory.setDescription(categoryRequestDTO.getDescription());
+
+        // Guardar y retornar
+        Category updatedCategory = categoryRepository.save(existingCategory);
+        return CategoryMapper.EntityToDto(updatedCategory);
+    }
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public CategoryResponseDTO updateCategoryPartial(Integer id, Map<String, Object> updates) throws Exception {
+        Category existingCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new Exception("Category not found with id: " + id));
+
+        // Actualizar cualquier campo presente en el Map
+        if (updates.containsKey("name")) {
+            existingCategory.setName((String) updates.get("name"));
+        }
+
+        if (updates.containsKey("description")) {
+            existingCategory.setDescription((String) updates.get("description"));
+        }
+
+        Category updatedCategory = categoryRepository.save(existingCategory);
+        return CategoryMapper.EntityToDto(updatedCategory);
+    }
+
+
 }

@@ -71,7 +71,8 @@ public class RecordServiceImpl implements RecordService {
         //Otras validaciones
         // Validación de dependencia con Category
         // Validar si existe la categoria por ID
-        Category category = categoryRepository.findById(recordRequestDTO.getCategoryId()).orElseThrow( () -> new Exception("Category not found"));
+        Category category = categoryRepository.findById(recordRequestDTO.getCategoryId())
+                .orElseThrow( () -> new Exception("Category not found"));
 
         //Convertir a entity desde el requestDTO
         Record record = RecordMapper.requestDTOtoEntity(recordRequestDTO);
