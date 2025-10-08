@@ -32,4 +32,18 @@ public class RecordController {
     public ResponseEntity<RecordResponseDTO> saveRecord(@RequestBody RecordRequestDTO recordRequestDTO) throws Exception {
         return new  ResponseEntity<>(recordService.saveRecord(recordRequestDTO), HttpStatus.CREATED);
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<RecordResponseDTO> updateRecord(
+            @PathVariable Integer id,
+            @RequestBody RecordRequestDTO recordRequestDTO
+    ) throws Exception {
+        return new ResponseEntity<>(recordService.updateRecord(id, recordRequestDTO), HttpStatus.OK);
+    }
+    @PatchMapping("/updatePartial/{id}")
+    public ResponseEntity<RecordResponseDTO> updateRecordPartial(
+            @PathVariable Integer id,
+            @RequestBody RecordRequestDTO recordRequestDTO
+    ) throws Exception {
+        return new ResponseEntity<>(recordService.updateRecordPartial(id, recordRequestDTO), HttpStatus.OK);
+    }
 }

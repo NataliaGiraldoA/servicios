@@ -38,5 +38,12 @@ public class CategoryController {
     ) throws Exception {
         return new ResponseEntity<>(categoryService.updateCategory(id, categoryRequestDTO), HttpStatus.OK);
     }
+    @PatchMapping("/updatePartial/{id}")
+    public ResponseEntity<CategoryResponseDTO> updateCategoryPartial(
+            @PathVariable Integer id,
+            @RequestBody CategoryRequestDTO categoryRequestDTO
+    ) throws Exception {
+        return new ResponseEntity<>(categoryService.updateCategoryPartial(id, categoryRequestDTO), HttpStatus.OK);
+    }
 
 }

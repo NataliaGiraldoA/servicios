@@ -2,7 +2,9 @@ package co.edu.usbcali.records.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Builder
@@ -17,8 +19,8 @@ public class RecordResponseDTO {
     private Integer stockQuantity;
     private String description;
     private String image;
-    private Date createdAt;
-    private Date updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private String categoryName;
     private Integer categoryId;
 }

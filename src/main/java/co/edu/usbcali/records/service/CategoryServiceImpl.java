@@ -82,21 +82,18 @@ public class CategoryServiceImpl implements CategoryService{
     }
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public CategoryResponseDTO updateCategoryPartial(Integer id, Map<String, Object> updates) throws Exception {
+    public CategoryResponseDTO updateCategoryPartial(Integer id, CategoryRequestDTO categoryRequestDTO) throws Exception {
         Category existingCategory = categoryRepository.findById(id)
                 .orElseThrow(() -> new Exception("Category not found with id: " + id));
 
-        // Actualizar cualquier campo presente en el Map
-        if (updates.containsKey("name")) {
-            existingCategory.setName((String) updates.get("name"));
+        if(categoryRequestDTO.getName() != null){
+            existingCategory.setName(categoryRequestDTO.getName());
         }
-
-        if (updates.containsKey("description")) {
-            existingCategory.setDescription((String) updates.get("description"));
+        if(categoryRequestDTO.getDescription() != null){
+            existingCategory.setDescription(categoryRequestDTO.getDescription());
         }
-
-        Category updatedCategory = categoryRepository.save(existingCategory);
-        return CategoryMapper.EntityToDto(updatedCategory);
+        Category updatedCategoryPartial = categoryRepository.save(existingCategory);
+        return CategoryMapper.EntityToDto(updatedCategoryPartial);
     }
 
 

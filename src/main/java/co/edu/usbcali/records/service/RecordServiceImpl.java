@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,5 +86,68 @@ public class RecordServiceImpl implements RecordService {
 
         return RecordMapper.EntityToDTO(record);
 
+    }
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public RecordResponseDTO updateRecord(Integer id, RecordRequestDTO recordRequestDTO) throws Exception {
+        if (id == null) {
+            throw new Exception("Record id is required");
+        }
+        Record existingRecord = recordRepository.findById(id)
+                .orElseThrow(() -> new Exception("Record not found with id: " + id));
+
+        existingRecord.setTitle(recordRequestDTO.getTitle());
+        existingRecord.setArtist(recordRequestDTO.getArtist());
+        existingRecord.setGenre(recordRequestDTO.getGenre());
+        existingRecord.setReleaseYear(recordRequestDTO.getReleaseYear());
+        existingRecord.setPrice(recordRequestDTO.getPrice());
+        existingRecord.setStockQuantity(recordRequestDTO.getStockQuantity());
+        existingRecord.setDescription(recordRequestDTO.getDescription());
+        existingRecord.setImage(recordRequestDTO.getImage());
+        existingRecord.setUpdatedAt(LocalDateTime.now());
+        existingRecord.setCategory(categoryRepository.findById(recordRequestDTO.getCategoryId())
+                .orElseThrow(() -> new Exception("Category not found with id: " + recordRequestDTO.getCategoryId())));
+
+        Record updatedRecord = recordRepository.save(existingRecord);
+        return RecordMapper.EntityToDTO(updatedRecord);
+
+    }
+
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public RecordResponseDTO updateRecordPartial(Integer id, RecordRequestDTO recordRequestDTO) throws Exception {
+        Record existingRecord = recordRepository.findById(id)
+                .orElseThrow(() -> new Exception("Record not found with id: " + id));
+        if(recordRequestDTO.getTitle() != null){
+            existingRecord.setTitle(recordRequestDTO.getTitle());
+        }
+        if(recordRequestDTO.getArtist() != null){
+            existingRecord.setArtist(recordRequestDTO.getArtist());
+        }
+        if(recordRequestDTO.getGenre() != null){
+            existingRecord.setGenre(recordRequestDTO.getGenre());
+        }
+        if(recordRequestDTO.getReleaseYear() != null){
+            existingRecord.setReleaseYear(recordRequestDTO.getReleaseYear());
+        }
+        if(recordRequestDTO.getPrice() != null){
+            existingRecord.setPrice(recordRequestDTO.getPrice());
+        }
+        if(recordRequestDTO.getStockQuantity() != null){
+            existingRecord.setStockQuantity(recordRequestDTO.getStockQuantity());
+        }
+        if(recordRequestDTO.getDescription() != null){
+            existingRecord.setDescription(recordRequestDTO.getDescription());
+        }
+        if(recordRequestDTO.getImage() != null){
+            existingRecord.setImage(recordRequestDTO.getImage());
+        }
+        if(recordRequestDTO.getCategoryId() != null){
+            existingRecord.setCategory(categoryRepository.findById(recordRequestDTO.getCategoryId())
+                    .orElseThrow(() -> new Exception("Category not found with id: " + recordRequestDTO.getCategoryId())));
+        }
+        existingRecord.setUpdatedAt(LocalDateTime.now());
+        Record updatedRecord = recordRepository.save(existingRecord);
+        return RecordMapper.EntityToDTO(updatedRecord);
     }
 }

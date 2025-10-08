@@ -9,4 +9,6 @@ public interface RecordService {
     List<String> getRecordsString();
     List<RecordResponseDTO> getRecordsResponseDTO();
     RecordResponseDTO saveRecord(RecordRequestDTO recordRequestDTO) throws Exception;
+    RecordResponseDTO updateRecord(Integer id, RecordRequestDTO recordRequestDTO) throws Exception;
+    RecordResponseDTO updateRecordPartial(Integer id, RecordRequestDTO recordRequestDTO) throws Exception;
 }
